@@ -4,17 +4,46 @@
 """
 
 import uvicorn
-from fastapi import FastAPI
+
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+
+from pydantic import BaseModel
+
+
+class GpsData(BaseModel):
+    """/collect endpoint json"""
+    lat: float
+    lon: float
+    age: int
+
 
 app = FastAPI()
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
-@app.get("/")
+
+@app.get("/", response_class=RedirectResponse)
 def root():
-    """get root html"""
-    a_val = "a"
-    b_val = "b" + a_val
-    return {"hello world": b_val}
+    """get root html; redirect to /items/1/ template test"""
+    return RedirectResponse("/items/1/")
+
+
+@app.get("/items/{item_id}", response_class=HTMLResponse)
+async def read_item(request: Request, item_id: str):
+    """get item html for specific id"""
+    return templates.TemplateResponse("template_item.html",
+                                      {"request": request, "item_id": item_id})
+
+
+@app.post("/collect")
+async def collect(gpsdata: GpsData):
+    """append GPS data to persistent storage"""
+    # TODO read json & save
+    print(gpsdata.json())
 
 
 if __name__ == "__main__":
