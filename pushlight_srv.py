@@ -18,6 +18,7 @@ class GpsData(BaseModel):
     lat: float
     lon: float
     age: int
+    servo_angle = int
 
 
 app = FastAPI()
