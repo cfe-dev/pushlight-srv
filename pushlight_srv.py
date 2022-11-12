@@ -3,6 +3,8 @@
     simple fastapi implementation for sqlite db access.
 """
 
+from typing import List
+
 import uvicorn
 
 from fastapi import FastAPI, Request
@@ -14,11 +16,17 @@ from pydantic import BaseModel
 
 
 class GpsData(BaseModel):
-    """/collect endpoint json"""
+    """gpsdata line"""
     lat: float
     lon: float
     age: int
-    servo_angle = int
+    servo_angle: int
+
+
+class PushLightData(BaseModel):
+    """/collect endpoint json"""
+    sensor: str
+    gpsdata: List[GpsData]
 
 
 app = FastAPI()
@@ -41,10 +49,10 @@ async def read_item(request: Request, item_id: str):
 
 
 @app.post("/collect")
-async def collect(gpsdata: GpsData):
+async def collect(pushlightdata: PushLightData):
     """append GPS data to persistent storage"""
     # TODO read json & save
-    print(gpsdata.json())
+    print(pushlightdata.json())
 
 
 if __name__ == "__main__":
