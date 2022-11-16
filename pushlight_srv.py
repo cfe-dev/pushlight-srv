@@ -3,33 +3,32 @@
     simple fastapi implementation for sqlite db access.
 """
 
-from typing import List
-
 import uvicorn
 
-from fastapi import FastAPI, Request
+from fastapi import Depends, FastAPI, Request
+# from fastapi import HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from sqlalchemy.orm import Session
 
-from pydantic import BaseModel
+from . import crud, models, schemas
+from .database import SessionLocal, engine
 
-
-class GpsData(BaseModel):
-    """gpsdata line"""
-    lat: float
-    lon: float
-    age: int
-    servo_angle: int
-
-
-class PushLightData(BaseModel):
-    """/collect endpoint json"""
-    sensor: str
-    gpsdata: List[GpsData]
-
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+
+# Dependency
+def get_db():
+    """open db connection"""
+    dbconn = SessionLocal()
+    try:
+        yield dbconn
+    finally:
+        dbconn.close()
+
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
@@ -49,10 +48,10 @@ async def read_item(request: Request, item_id: str):
 
 
 @app.post("/collect")
-async def collect(pushlightdata: PushLightData):
+async def collect(pushlightdata: schemas.PushLightData, dbconn: Session = Depends(get_db)):
     """append GPS data to persistent storage"""
-    # TODO read json & save
     print(pushlightdata.json())
+    crud.create_gpsdata(dbconn=dbconn, pushlightdata=pushlightdata)
 
 
 if __name__ == "__main__":
