@@ -63,7 +63,7 @@ async def read_lastitems(request: Request, item_count: int, dbconn: Session = De
 async def collect(pushlightdata: schemas.PushLightData, dbconn: Session = Depends(get_db)):
     """append GPS data to persistent storage"""
     print(pushlightdata.json())
-    crud.create_gpsdata(dbconn=dbconn, pushlightdata=pushlightdata)
+    return crud.create_gpsdata(dbconn=dbconn, pushlightdata=pushlightdata)
 
 
 app.include_router(prefix_router)

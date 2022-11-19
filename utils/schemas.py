@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 class GpsData(BaseModel):
     """gpsdata line"""
+    data_id: int
     lat: float
     lon: float
     age: int

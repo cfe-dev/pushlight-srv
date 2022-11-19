@@ -4,18 +4,18 @@
     <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet" />
   </head>
   <body>
-    <h1>Item Details</h1>
+    <h1>GPS Data</h1>
     <table>
       <tr>
         <td>Data ID</td>
         <td>Client ID</td>
         <td>Sensor</td>
       </tr>
-      {% for lastitem in lastitems %}
+      {% for gpsdata in lastitems %}
       <tr>
-        <td>{{lastitem["data_id"]}}</td>
-        <td>{{lastitem["pushlight_client_id"]}}</td>
-        <td>{{lastitem["sensor"]}}</td>
+        <td>{{gpsdata["data_id"]}}</td>
+        <td>{{gpsdata["pushlight_client_id"]}}</td>
+        <td>{{gpsdata["sensor"]}}</td>
       </tr>
       {% endfor %}
     </table>
