@@ -5,7 +5,7 @@
 
 import uvicorn
 
-from fastapi import APIRouter, Depends, FastAPI, Request
+from fastapi import Depends, FastAPI, Request
 # from fastapi import HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
@@ -17,11 +17,7 @@ from utils.database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
 
-# app = FastAPI(root_path='/pushlight_srv/v1/')
-# app = FastAPI(root_path='/pushlight_srv')
 app = FastAPI()
-
-# route = APIRouter(prefix="/pushlight_srv/v1")
 
 
 # Dependency
@@ -65,8 +61,5 @@ async def collect(pushlightdata: schemas.PushLightData, dbconn: Session = Depend
     print(pushlightdata.json())
     return crud.create_gpsdata(dbconn=dbconn, pushlightdata=pushlightdata)
 
-# app.include_router(route)
-
 if __name__ == "__main__":
-    # uvicorn.run(app, host="0.0.0.0", port=8220, root_path="/pushlight_srv/v1")
     uvicorn.run(app, host="0.0.0.0", port=8220)
