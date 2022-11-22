@@ -10,6 +10,11 @@ class GpsData(BaseModel):
     lat: float
     lon: float
     age: int
+    date: int
+    time: int
+    altitude: float
+    course: float
+    speed_kmph: float
     servo_angle: int
 
     class Config:

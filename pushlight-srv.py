@@ -21,7 +21,7 @@ app = FastAPI()
 
 
 # Dependency
-def get_db():
+def get_dbconn():
     """open db connection"""
     dbconn = SessionLocal()
     try:
@@ -48,7 +48,7 @@ async def get_items(request: Request, item_id: str):
 
 
 @app.get("/items/last/{item_count}", response_class=HTMLResponse)
-async def get_items_last(request: Request, item_count: int, dbconn: Session = Depends(get_db)):
+async def get_items_last(request: Request, item_count: int, dbconn: Session = Depends(get_dbconn)):
     """get item html for specific id"""
     lastitems = crud.get_lastgpsdata(dbconn=dbconn, item_count=item_count)
     return templates.TemplateResponse("template_gpsdata.html",
@@ -56,7 +56,7 @@ async def get_items_last(request: Request, item_count: int, dbconn: Session = De
 
 
 @app.post("/collect")
-async def collect(pushlightdata: schemas.PushLightData, dbconn: Session = Depends(get_db)):
+async def collect(pushlightdata: schemas.PushLightData, dbconn: Session = Depends(get_dbconn)):
     """append GPS data to persistent storage"""
     print(pushlightdata.json())
     return crud.create_gpsdata(dbconn=dbconn, pushlightdata=pushlightdata)
