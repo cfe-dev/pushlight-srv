@@ -1,41 +1,50 @@
 <html>
   <head>
     <title>Item Details</title>
-    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet" />
+    <link href="/static/styles.css" rel="stylesheet" />
+    <link href="/static/css/tabulator.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="/static/js/tabulator.min.js" />
+    <script type="text/javascript" src="/static/main.js" />
   </head>
   <body>
     <h1>GPS Data</h1>
-    <table>
-      <tr>
-        <td>Data ID</td>
-        <td>Client ID</td>
-        <td>Sensor</td>
-        <td>Lat</td>
-        <td>Long</td>
-        <td>Age</td>
-        <td>Date</td>
-        <td>Time</td>
-        <td>Alt</td>
-        <td>Course</td>
-        <td>Speed</td>
-        <td>Angle</td>
-      </tr>
-      {% for gpsdata in lastitems %}
-      <tr>
-        <td>{{gpsdata["data_id"]}}</td>
-        <td>{{gpsdata["pushlight_client_id"]}}</td>
-        <td>{{gpsdata["sensor"]}}</td>
-        <td>{{gpsdata["lat"]}}</td>
-        <td>{{gpsdata["lon"]}}</td>
-        <td>{{gpsdata["age"]}}</td>
-        <td>{{gpsdata["date"]}}</td>
-        <td>{{gpsdata["time"]}}</td>
-        <td>{{gpsdata["altitude"]}}</td>
-        <td>{{gpsdata["course"]}}</td>
-        <td>{{gpsdata["speed_kmph"]}}</td>
-        <td>{{gpsdata["servo_angle"]}}</td>
-      </tr>
-      {% endfor %}
-    </table>
+    <div class="table-responsive" data-pattern="priority-columns">
+      <table>
+        <thead>
+          <tr>
+            <td>Data ID</td>
+            <td>Client ID</td>
+            <td>Sensor</td>
+            <td>Lat</td>
+            <td>Long</td>
+            <td>Age</td>
+            <td>Date</td>
+            <td>Time</td>
+            <td>Alt</td>
+            <td>Course</td>
+            <td>Speed</td>
+            <td>Angle</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for gpsdata in lastitems %}
+          <tr>
+            <td>{{gpsdata["data_id"]}}</td>
+            <td>{{gpsdata["pushlight_client_id"]}}</td>
+            <td>{{gpsdata["sensor"]}}</td>
+            <td>{{gpsdata["lat"]}}</td>
+            <td>{{gpsdata["lon"]}}</td>
+            <td>{{gpsdata["age"]}}</td>
+            <td>{{gpsdata["date"]}}</td>
+            <td>{{gpsdata["time"]}}</td>
+            <td>{{gpsdata["altitude"]}}</td>
+            <td>{{gpsdata["course"]}}</td>
+            <td>{{gpsdata["speed_kmph"]}}</td>
+            <td>{{gpsdata["servo_angle"]}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>

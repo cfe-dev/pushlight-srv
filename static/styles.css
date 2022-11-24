@@ -1,3 +1,37 @@
 h1 {
     color: green;
 }
+
+h2 {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.table-bordered {
+  border: 1px solid #000 !important;
+}
+
+table caption {
+	padding: .5em 0;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th, td {
+    border: 2px solid #000 !important;
+    padding: 2px;
+}
+
+@media screen and (max-width: 767px) {
+  table caption {
+    display: none;
+  }
+}
+
+.p {
+  text-align: center;
+  padding-top: 140px;
+  font-size: 14px;
+}

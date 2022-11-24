@@ -1,6 +1,6 @@
 """pushlight-srv Database Models"""
 
-from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy import Column, Integer, String, Float  # , DateTime
 # from sqlalchemy import ForeignKey, Boolean
 # from sqlalchemy.orm import relationship
 
@@ -20,6 +20,7 @@ class GpsData(Base):
     age = Column(Integer)
     date = Column(Integer)
     time = Column(Integer)
+    # datetime = Column(DateTime)
     altitude = Column(Float)
     course = Column(Float)
     speed_kmph = Column(Float)

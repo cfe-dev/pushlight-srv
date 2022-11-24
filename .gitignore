@@ -127,4 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# database file
 sql_app.db
+
+# 3rd party includes
+static/css
+static/js

@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <title>Item Details</title>
+    <link href="/static/styles.css" rel="stylesheet" />
+    <link href="/static/css/tabulator.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="/static/js/tabulator.min.js"></script>
+    <script type="text/javascript" src="/static/js/luxon.min.js"></script>
+  </head>
+  <body>
+    <h1>GPS Data</h1>
+    <div id="example-table"></div>
+    <script type="text/javascript">
+      var tabledata = [
+        {% for gpsdata in lastitems %}
+          {
+          "data_id": "{{gpsdata["data_id"]}}",
+          "pushlight_client_id": "{{gpsdata["pushlight_client_id"]}}",
+          "sensor": "{{gpsdata["sensor"]}}",
+          "lat": "{{gpsdata["lat"]}}",
+          "lon": "{{gpsdata["lon"]}}",
+          "age": "{{gpsdata["age"]}}",
+          "date": "{{gpsdata["date"]}}",
+          "time": "{{gpsdata["time"]}}",
+          "altitude": "{{gpsdata["altitude"]}}",
+          "course": "{{gpsdata["course"]}}",
+          "speed_kmph": "{{gpsdata["speed_kmph"]}}",
+          "servo_angle": "{{gpsdata["servo_angle"]}}"
+          }
+          {%- if not loop.last %}
+          ,
+          {% endif %}
+        {% endfor %}
+        ];
+    </script>
+    <script type="text/javascript" src="/static/main.js"></script>
+  </body>
+</html>
