@@ -51,3 +51,15 @@ var table = new Tabulator("#example-table", {
 table.on("rowClick", function(e, row){
   alert("Row " + row.getData().data_id + " Clicked!!!!");
 });
+
+
+var map = L.map('map').setView([tabledata[0].lat, tabledata[0].lon], 18);
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+for (const row of tabledata) {
+  var marker = L.marker([row.lat, row.lon]).addTo(map);
+};

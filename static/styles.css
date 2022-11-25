@@ -35,3 +35,7 @@ th, td {
   padding-top: 140px;
   font-size: 14px;
 }
+
+#map {
+  height: 480px;
+}

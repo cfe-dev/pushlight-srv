@@ -3,11 +3,14 @@
     <title>Item Details</title>
     <link href="/static/styles.css" rel="stylesheet" />
     <link href="/static/css/tabulator.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/css/leaflet.css" />
     <script type="text/javascript" src="/static/js/tabulator.min.js"></script>
     <script type="text/javascript" src="/static/js/luxon.min.js"></script>
+    <script src="/static/js/leaflet.js"></script>
   </head>
   <body>
     <h1>GPS Data</h1>
+    <div id="map"></div>
     <div id="example-table"></div>
     <script type="text/javascript">
       var tabledata = [
