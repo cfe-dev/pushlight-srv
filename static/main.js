@@ -86,7 +86,7 @@ var table = new Tabulator("#example-table", {
 
 // trigger an alert message when the row is clicked
 table.on("rowClick", function(e, row){
-  alert("Row " + row.getData().data_id + " Clicked!!!!");
+  map.setView([row.getData().lat, row.getData().lon], 18);
 });
 
 table.on("dataLoaded", function(data){
