@@ -1,1 +1,13 @@
+backend/db:
 https://fastapi.tiangolo.com/tutorial/sql-databases/
+
+offline render map:
+https://github.com/tisljaricleo/GPS-visualization-Python
+
+online map plugin:
+https://leafletjs.com/examples/quick-start/
+
+table plugin:
+https://tabulator.info/docs/5.4/quickstart
+https://tabulator.info/docs/5.4/filter#header-filters
+https://tabulator.info/docs/5.4/edit#edit-builtin

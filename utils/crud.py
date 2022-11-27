@@ -1,7 +1,7 @@
 """database access methods"""
 
 # import datetime
-# from typing import List
+from typing import List
 from sqlalchemy.orm import Session
 
 from .models import GpsData
@@ -14,16 +14,18 @@ def get_gpsdata(dbconn: Session, data_id: int) -> GpsData | None:
         GpsData.data_id == data_id).first()
 
 
-def get_lastgpsdata(dbconn: Session, item_count: int):  # -> List[GpsData]:
+def get_lastgpsdata(dbconn: Session, item_count: int, offset: int) -> List[GpsData]:
     """return last x data points by time"""
     # retval = dbconn.query(GpsData).order_by(
     #     GpsData.date.desc(), GpsData.time.desc()).limit(item_count)
-    # retval = [models.GpsData(data_id=1, pushlight_client_id=2, sensor="gps"),
-    #           models.GpsData(data_id=22, pushlight_client_id=33, sensor="gps")]
-    # retval = retval[::-1]  # reverse
-    retval = dbconn.query(GpsData).order_by(
+    # retval = [GpsData(data_id=1, pushlight_client_id=2, sensor="gps"),
+    #           GpsData(data_id=22, pushlight_client_id=33, sensor="gps")]
+    retval = dbconn.query(GpsData).where(GpsData.data_id > offset).order_by(
         GpsData.data_id.desc()).limit(item_count)
-    return retval
+    # retval = dbconn.query(GpsData).order_by(
+    #     GpsData.data_id.desc()).limit(item_count)
+    retval = retval[::-1]  # reverse
+    return retval  # type: ignore
 
 
 def create_gpsdata(dbconn: Session, pushlightdata: PushLightData):
