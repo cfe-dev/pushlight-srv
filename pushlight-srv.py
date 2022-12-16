@@ -36,9 +36,19 @@ def get_dbconn():
 
 
 def row2dict(row):
+    """sql alchemy declarative base row to json dict/obj"""
     d = {}
     for column in row.__table__.columns:
-        d[column.name] = str(getattr(row, column.name))
+        if column.name == "Date" or column.name == "Time":
+            i: int = int(getattr(row, column.name))
+            d[column.name] = f'{i:08d}'
+        else:
+            d[column.name] = str(getattr(row, column.name))
+
+    d["datetime"] = "%s-%s-%sT%s:%s:%s.000Z" % (
+        d["date"][0:4], d["date"][4:6], d["date"][6:8], d["time"][0:2], d["time"][2:4], d["time"][4:6])
+    del d["date"]
+    del d["time"]
 
     return d
 
@@ -72,7 +82,10 @@ async def get_items_last(request: Request, item_count: int):
 
 
 @app.get("/items/last", response_class=JSONResponse)
-async def get_items_lastG(request: Request, item_count: int, last_id: int = 0, dbconn: Session = Depends(get_dbconn)):
+async def get_items_lastG(request: Request,
+                          item_count: int,
+                          last_id: int = 0,
+                          dbconn: Session = Depends(get_dbconn)):
     """get last x items as json"""
     lastitems = crud.get_lastgpsdata(
         dbconn=dbconn, item_count=item_count, offset=last_id)
@@ -86,8 +99,9 @@ async def get_items_lastG(request: Request, item_count: int, last_id: int = 0, d
         for item in lastitems:
             retval.append(row2dict(item))
         return JSONResponse(content=retval, status_code=status.HTTP_200_OK)
+        # return JSONResponse(content=lastitems, status_code=status.HTTP_200_OK)
     else:
-        return JSONResponse(content={}, status_code=status.HTTP_200_OK)
+        return JSONResponse(content=[], status_code=status.HTTP_200_OK)
 
 
 @app.get("/items/{item_id}", response_class=HTMLResponse)
